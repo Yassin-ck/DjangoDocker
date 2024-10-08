@@ -2,8 +2,8 @@ FROM ubuntu
 
 WORKDIR /app
 
-COPY requirements.txt
-COPY devops 
+COPY requirements.txt /app
+COPY devops /app
 
 RUN apt-get update && \
     apt-get install -y python-3 pip && \
