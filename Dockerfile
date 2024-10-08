@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get install -y python3 python3-pip 
 
 #create python virtual environment
-RUN python-3 -m venv /app/venv
+RUN python3 -m venv /app/venv
 # install python packages from virtual environment
 RUN /app/venv/pip install --upgrade pip && \
     /app/venv/pip install -r requirements.txt 
