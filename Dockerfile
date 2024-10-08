@@ -12,8 +12,8 @@ RUN apt-get update && \
 #create python virtual environment
 RUN python3 -m venv /app/venv
 # install python packages from virtual environment
-RUN /app/venv/pip install --upgrade pip && \
-    /app/venv/pip install -r requirements.txt 
+RUN /app/venv/python3 -m pip install --upgrade pip && \
+    /app/venv/python3 -m pip install -r requirements.txt 
 #copy the code
 COPY Devops /app
 
