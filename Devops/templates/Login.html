@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+
+<div class="container text-center" >
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="container text-center bg-light border border-radius rounded mt-5" >
+        <h1 class="head" >Login</h1>
+        <hr/>
+        <br/>
+
+        <input name="username" placeholder="username" required /><br /><br />
+
+        <input name="password" type="password" placeholder="password" required/><br /><br />
+        
+        <button class="bg-secondary border border-radius rounded m-3 pb-2 pt-2 ps-3 pe-3">Login</button>
+        <br/>
+        <a href="{% url 'register' %}" class="btn text-primary">Click to Register here...</a>
+    </div>
+    
+</form>
+    {% endblock %}
+</div>
