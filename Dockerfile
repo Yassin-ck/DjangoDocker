@@ -7,7 +7,7 @@ COPY Devops /app
 
 #install python and pip
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip 
+    apt-get install -y python3 python3-pip python3-venv
 
 #create python virtual environment
 RUN python3 -m venv /app/venv
