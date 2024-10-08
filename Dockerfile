@@ -19,10 +19,12 @@ RUN /app/venv/bin/pip install --upgrade pip && \
     /app/venv/bin/pip install -r requirements.txt
 
 # Copy the rest of the application code
-COPY . /app/
+COPY Devops /app/
 
 # Set environment variables for virtual environment
 ENV PATH="/app/venv/bin:$PATH"
 
 # Set default command
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["python3"]
+CMD [ "manage.py", "runserver", "0.0.0.0:8000"]
+
