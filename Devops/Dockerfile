@@ -1,29 +1,39 @@
-FROM ubuntu:latest
+# Use Ubuntu
+FROM ubuntu:20.04 AS build
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Install Python, pip, and the venv package
+# Copy the requirements.txt to the working directory
+COPY requirements.txt /app
+
+# Install Python and necessary tools
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv && \
+    apt-get install -y python3 python3-pip && \
     apt-get clean
 
-# Copy requirements first to leverage Docker caching
-COPY requirements.txt /app/
 
-# Create a Python virtual environment
-RUN python3 -m venv /app/venv
-
-# Install Python packages from requirements.txt in the virtual environment
-RUN /app/venv/bin/pip install --upgrade pip && \
-    /app/venv/bin/pip install -r requirements.txt
+# Activate the virtual environment and install the dependencies
+# Log the output of the installation to ensure it's happening
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt --verbose
 
 # Copy the rest of the application code
-COPY Devops /app/
+COPY . /app/
 
-# Set environment variables for virtual environment
-ENV PATH="/app/venv/bin:$PATH"
+# Expose port 8000
+EXPOSE 8000
 
-# Set default command
-CMD [ "python3","manage.py", "runserver", "0.0.0.0:8000"]
+##################################################
+# STAGE 2
+##################################################
+FROM gcr.io/distroless/python3
+
+# Copy the application and venv from the build stage
+COPY --from=build /app /app
+
+
+# Run the Django development server
+ENTRYPOINT ["python3"]
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
 
